@@ -1,0 +1,29 @@
+version: "3.7"
+services:
+  jupyterlab:
+    build: .
+    container_name: ml-web-app
+    volumes:
+      - '.:/workspace'
+      - /tmp/pulse-socket:/tmp/pulse-socket
+      - /tmp/.X11-unix:/tmp/.X11-unix  # X11ソケットのマウント
+      # プロジェクト構造のための追加マウント
+      - ./models:/workspace/models  # 学習済みモデルの永続化
+      - ./data:/workspace/data      # データセット用
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - PULSE_SERVER=host.docker.internal
+      - PULSE_COOKIE=/tmp/pulse/cookie
+      - PULSE_DISABLE_AUTHENTICATION=true
+      - DISPLAY=host.docker.internal:0.0  # DISPLAYの設定
+      # Flask開発用の環境変数
+      - FLASK_APP=/workspace/src/app.py
+      - FLASK_ENV=development
+      - PYTHONPATH=/workspace
+    ports:
+      - "8888:8888"  # JupyterLab
+      - "5000:5000"  # Flask Web App
+    platform: linux/amd64
+    # ホットリロード用の設定
+    command: >
+      bash -c "jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token=''"

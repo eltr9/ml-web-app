@@ -1,0 +1,27 @@
+# Jupyter環境
+jupyter
+jupyterlab
+notebook
+
+# Web開発
+flask==2.0.1
+flask-cors==3.0.10
+gunicorn==20.1.0
+
+# 機械学習
+scikit-learn==1.0.2
+pandas==1.4.2
+numpy==1.22.3
+
+# 視覚化
+matplotlib==3.5.2
+seaborn==0.11.2
+
+# 開発ツール
+python-dotenv==0.20.0
+black==22.3.0
+flake8==4.0.1
+pytest==7.1.2
+
+# モデルの保存と読み込み
+joblib==1.1.0
